@@ -55,13 +55,7 @@ bash deploy.sh
 7. 验证部署
 合约部署成功后，可以在对应的区块链浏览器（如 Etherscan 或 Goerli Etherscan）中查看部署的合约地址。
 
-文件说明
-deploy.sh：主脚本，引导用户输入配置、安装依赖、编译和部署合约。
-.env：存储敏感信息（私钥、网络 URL 等），由 deploy.sh 自动生成。
-hardhat.config.js：Hardhat 配置文件，定义网络和编译设置。
-contracts/Token.sol：代币合约文件，实现了 ERC20 标准。
-scripts/deploy.js：合约部署脚本，使用 ethers.js 和 Hardhat 进行合约部署。
-package.json：项目依赖配置文件，管理依赖项和启动命令。
+
 
 常见问题
 依赖安装失败：确保已正确安装 Node.js 和 npm，并检查网络连接是否正常。
