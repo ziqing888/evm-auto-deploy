@@ -1,0 +1,15 @@
+{
+  "name": "evm-auto-deploy",
+  "version": "1.0.0",
+  "description": "A tool for automatically deploying Ethereum smart contracts to various networks.",
+  "main": "deploy.sh",
+  "scripts": {
+    "start": "bash deploy.sh"
+  },
+  "dependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^1.0.0",
+    "dotenv": "^16.4.5",
+    "ethers": "^6.0.0",
+    "hardhat": "^2.12.7"
+  }
+}
