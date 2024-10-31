@@ -21,9 +21,29 @@ if ! command -v node &> /dev/null || ! command -v npm &> /dev/null; then
     exit 1
 fi
 
-# 安装 Node.js 项目依赖
-show "安装项目依赖..."
-npm install --legacy-peer-deps
+# 检查是否安装 Hardhat 和 OpenZeppelin
+if ! [ -d "node_modules/hardhat" ] || ! [ -d "node_modules/@openzeppelin/contracts" ]; then
+    show "安装项目依赖..."
+    npm install --legacy-peer-deps
+fi
+
+# 检查并安装 Solidity 编译器版本
+if ! grep -q "version: \"0.8.20\"" hardhat.config.js; then
+    show "配置 Hardhat 编译器为 0.8.20..."
+    cat <<EOL > hardhat.config.js
+require("@nomiclabs/hardhat-ethers");
+
+module.exports = {
+  solidity: {
+    compilers: [
+      {
+        version: "0.8.20",
+      },
+    ],
+  },
+};
+EOL
+fi
 
 # 获取用户输入
 read -p "请输入您的私钥: " PRIVATE_KEY
@@ -43,10 +63,17 @@ EOL
 
 # 编译合约
 show "编译合约..."
-npx hardhat compile
+npx hardhat compile || { echo -e "${RED}合约编译失败。请检查编译器版本和依赖项。${NORMAL}"; exit 1; }
 
-# 使用 Node.js 脚本部署合约
+# 检查编译是否成功
+if [ $? -ne 0 ]; then
+  echo -e "${RED}合约编译失败，请检查 Solidity 版本或依赖项。${NORMAL}"
+  exit 1
+fi
+
+# 部署合约
 show "部署合约中..."
-node scripts/deploy.js
+node scripts/deploy.js || { echo -e "${RED}合约部署失败，请检查 RPC URL 和私钥配置。${NORMAL}"; exit 1; }
 
 echo -e "${GREEN}✅ 合约部署完成！${NORMAL}"
+
