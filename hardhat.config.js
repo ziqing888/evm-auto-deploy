@@ -1,12 +1,15 @@
-require("@nomicfoundation/hardhat-toolbox");
-require("dotenv").config();
+// hardhat.config.js
+require("@nomiclabs/hardhat-ethers");
 
 module.exports = {
-  solidity: "0.8.18",
+  solidity: {
+    compilers: [
+      {
+        version: "0.8.20",
+      },
+    ],
+  },
   networks: {
-    custom: {
-      url: process.env.RPC_URL,
-      accounts: [process.env.PRIVATE_KEY],
-    },
+    // 配置网络选项
   },
 };
