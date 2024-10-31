@@ -23,7 +23,7 @@ fi
 
 # 安装 Node.js 项目依赖
 show "安装项目依赖..."
-npm install
+npm install --legacy-peer-deps
 
 # 获取用户输入
 read -p "请输入您的私钥: " PRIVATE_KEY
